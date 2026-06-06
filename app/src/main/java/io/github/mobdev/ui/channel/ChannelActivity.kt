@@ -104,7 +104,7 @@ class ChannelActivity : AppCompatActivity() {
                 if (isLandscape()) {
                     messageContainer?.isVisible = true
                     val sortedMessages = messages.reversed()
-                    val username = repository.getUsername() ?: ""
+                    val username = repository.getCurrentUser() ?: ""
 
                     if (!::messageAdapter.isInitialized) {
                         initMessageRecyclerView()

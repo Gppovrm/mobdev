@@ -74,7 +74,7 @@ class MessageActivity : AppCompatActivity() {
             val result = repository.getMessages(channelName)
             result.onSuccess { messages ->
                 val sortedMessages = messages.reversed()
-                val username = repository.getUsername() ?: ""
+                val username = repository.getCurrentUser() ?: ""
                 adapter.updateMessages(sortedMessages, username)
                 if (sortedMessages.isNotEmpty()) {
                     binding.rvMessages.scrollToPosition(adapter.itemCount - 1)
