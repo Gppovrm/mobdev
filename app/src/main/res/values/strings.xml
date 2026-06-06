@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">mobdev</string>
+    <string name="app_name">Mobdev Chat</string>
+    <string name="login_title">Вход в чат</string>
+    <string name="login_hint_username">Имя пользователя</string>
+    <string name="login_hint_password">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="login_error_empty">Заполните все поля</string>
+    <string name="login_error_invalid">Неверный логин или пароль</string>
+    <string name="login_error_network">Ошибка сети</string>
+    <string name="channel_title">Каналы</string>
+    <string name="channel_logout">Выйти</string>
+    <string name="channel_empty">Список каналов пуст</string>
+    <string name="channel_load_error">Ошибка загрузки</string>
+    <string name="message_hint">Введите сообщение...</string>
+    <string name="message_send">Отправить</string>
+    <string name="message_back">Назад</string>
+    <string name="message_send_error">Не удалось отправить сообщение</string>
+    <string name="message_load_error">Не удалось загрузить сообщения</string>
+    <string name="message_image_placeholder">Изображение</string>
+    <string name="image_close">Закрыть</string>
+    <string name="error_401">Сессия истекла, войдите снова</string>
 </resources>
