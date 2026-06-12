@@ -25,7 +25,7 @@ class ChannelAdapter(
         val channel = channels[position]
         holder.bind(channel)
 
-        // Подсветка выбранного канала
+        // Подсветка выбранн канала
         if (channel == selectedChannel) {
             holder.itemView.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.selected_channel)
@@ -40,7 +40,6 @@ class ChannelAdapter(
             // Сначала снимаем подсветку со старого
             val oldPosition = channels.indexOf(selectedChannel)
             selectedChannel = channel
-            // Обновляем старый и новый элементы
             if (oldPosition != -1) notifyItemChanged(oldPosition)
             notifyItemChanged(position)
             onItemClick(channel)

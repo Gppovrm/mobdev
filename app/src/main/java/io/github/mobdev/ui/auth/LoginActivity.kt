@@ -48,7 +48,8 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent(this@LoginActivity, ChannelActivity::class.java))
                     finish()
                 }.onFailure { error ->
-                    val msg = if (error.message?.contains("401") == true) {
+                    val msg = if (error.message?.contains("401") == true ||
+                        error.message?.contains("not found") == true) {
                         getString(R.string.login_error_invalid)
                     } else {
                         getString(R.string.login_error_network)

@@ -12,7 +12,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     suspend fun login(
         @Body request: LoginRequest
-    ): Response<ResponseBody>  // 👈 Меняем String на ResponseBody
+    ): Response<ResponseBody>
 
     @GET("/channels")
     suspend fun getChannels(
