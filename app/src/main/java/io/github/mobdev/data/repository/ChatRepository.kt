@@ -8,17 +8,19 @@ import io.github.mobdev.data.model.LoginRequest
 import io.github.mobdev.data.model.Message
 import io.github.mobdev.data.model.MessageData
 import io.github.mobdev.data.model.TextContent
-import io.github.mobdev.data.network.RetrofitClient
+import io.github.mobdev.data.network.ApiService
 import io.github.mobdev.utils.NetworkMonitor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class ChatRepository(private val context: Context) {
+class ChatRepository(
+    private val context: Context,
+    private val api: ApiService,
+    private val db: AppDatabase
+) {
 
-    private val api = RetrofitClient.api
-    private val db = AppDatabase.getInstance(context)
     private val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
     private val networkMonitor = NetworkMonitor(context)
 

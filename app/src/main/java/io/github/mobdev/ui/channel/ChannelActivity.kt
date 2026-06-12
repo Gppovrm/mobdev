@@ -4,24 +4,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mobdev.R
-import io.github.mobdev.data.repository.ChatRepository
 import io.github.mobdev.databinding.ActivityChannelBinding
 import io.github.mobdev.ui.auth.LoginActivity
 import io.github.mobdev.ui.image.ImageActivity
 import io.github.mobdev.ui.message.MessageActivity
 import io.github.mobdev.ui.message.MessageAdapter
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import io.github.mobdev.ChatApplication
 
 class ChannelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChannelBinding
-    private lateinit var repository: ChatRepository
+
+    @Inject
+    lateinit var viewModelFactory: ChannelViewModelFactory
+
+    private val viewModel: ChannelViewModel by viewModels { viewModelFactory }
+
     private lateinit var channelAdapter: ChannelAdapter
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageRecyclerView: RecyclerView
@@ -32,12 +39,12 @@ class ChannelActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (application as ChatApplication).appComponent.inject(this)
+
         binding = ActivityChannelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        repository = ChatRepository(this)
-
-        if (!repository.isLoggedIn()) {
+        if (!viewModel.isLoggedIn()) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
@@ -47,16 +54,48 @@ class ChannelActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupListeners()
-        loadChannels()
+        setupObservers()
+        viewModel.loadChannels()
 
         selectedChannel?.takeIf { isLandscape() }?.let {
-            loadMessagesForChannel(it)
+            viewModel.loadMessagesForChannel(it)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("selected_channel", selectedChannel)
+    }
+
+    private fun setupObservers() {
+        viewModel.channels.observe(this) { channels ->
+            channelAdapter.updateChannels(channels)
+        }
+
+        viewModel.messages.observe(this) { messages ->
+            if (isLandscape() && messages.isNotEmpty()) {
+                messageContainer?.isVisible = true
+                val sortedMessages = messages.reversed()
+                val username = viewModel.getCurrentUser() ?: ""
+
+                if (!::messageAdapter.isInitialized) {
+                    initMessageRecyclerView()
+                }
+                messageAdapter.updateMessages(sortedMessages, username)
+                messageRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            // можно показать progress bar
+        }
+
+        viewModel.error.observe(this) { error ->
+            error?.let {
+                Toast.makeText(this, "Ошибка: $it", Toast.LENGTH_SHORT).show()
+                viewModel.clearError()
+            }
+        }
     }
 
     private fun isLandscape(): Boolean {
@@ -68,7 +107,7 @@ class ChannelActivity : AppCompatActivity() {
             selectedChannel = channel
             channelAdapter.updateSelectedChannel(channel)
             if (isLandscape()) {
-                loadMessagesForChannel(channel)
+                viewModel.loadMessagesForChannel(channel)
             } else {
                 val intent = Intent(this, MessageActivity::class.java)
                 intent.putExtra("channel_name", channel)
@@ -81,41 +120,9 @@ class ChannelActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnLogout.setOnClickListener {
-            repository.logout()
+            viewModel.logout()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
-        }
-    }
-
-    private fun loadChannels() {
-        lifecycleScope.launch {
-            repository.getChannels().onSuccess { channels ->
-                channelAdapter.updateChannels(channels)
-            }.onFailure { error ->
-                Toast.makeText(this@ChannelActivity, "Ошибка: ${error.message}", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }
-
-    private fun loadMessagesForChannel(channel: String) {
-        lifecycleScope.launch {
-            repository.getMessages(channel).onSuccess { messages ->
-                if (isLandscape()) {
-                    messageContainer?.isVisible = true
-                    val sortedMessages = messages.reversed()
-                    val username = repository.getCurrentUser() ?: ""
-
-                    if (!::messageAdapter.isInitialized) {
-                        initMessageRecyclerView()
-                    }
-                    messageAdapter.updateMessages(sortedMessages, username)
-                    messageRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
-                }
-            }.onFailure { error ->
-                Toast.makeText(this@ChannelActivity, "Ошибка: ${error.message}", Toast.LENGTH_SHORT)
-                    .show()
-            }
         }
     }
 
