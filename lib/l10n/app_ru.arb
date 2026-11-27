@@ -1,0 +1,51 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Чат",
+  "loginTitle": "Вход",
+  "loginField": "Логин",
+  "passwordField": "Пароль",
+  "showPassword": "Показать пароль",
+  "hidePassword": "Скрыть пароль",
+  "loginButton": "Войти",
+  "errorWrongCredentials": "Неверный логин или пароль",
+  "errorNetwork": "Не удалось связаться с сервером",
+  "errorServer": "Сервис временно недоступен",
+  "errorRequest": "Сервер отклонил запрос",
+  "errorUnauthorized": "Сессия завершена, войдите снова",
+  "sessionExpired": "Сессия завершена, войдите снова",
+  "channelsTitle": "Каналы",
+  "logout": "Выйти",
+  "channelsEmpty": "Каналов пока нет",
+  "retry": "Повторить",
+  "refresh": "Обновить",
+  "selectChat": "Выберите чат",
+  "backToChats": "К списку чатов",
+  "closeChat": "Закрыть чат",
+  "messagesEmpty": "Сообщений пока нет",
+  "loadOlder": "Загрузить предыдущие",
+  "historyStart": "Начало истории",
+  "loadOlderError": "Не удалось загрузить предыдущие сообщения",
+  "refreshError": "Не удалось обновить сообщения",
+  "messageField": "Сообщение",
+  "send": "Отправить",
+  "statusSending": "Отправляется",
+  "statusSent": "Отправлено",
+  "statusFailed": "Не удалось подтвердить отправку",
+  "retrySend": "Повторить",
+  "returnToEditor": "В редактор",
+  "retryDialogTitle": "Отправить ещё раз?",
+  "retryDialogMessage": "Сервер мог получить сообщение, но ответ не дошёл. При повторной отправке оно может появиться дважды.",
+  "cancel": "Отмена",
+  "sendAgain": "Отправить",
+  "closeImage": "Закрыть картинку",
+  "imageError": "Не удалось загрузить картинку",
+  "imageMessage": "Картинка от {author}",
+  "@imageMessage": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  },
+  "loading": "Загрузка…"
+}
