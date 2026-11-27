@@ -1,0 +1,40 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Контакты",
+  "searchHint": "Поиск по имени",
+  "foundCount": "Найдено: {count}",
+  "@foundCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sortAscending": "Сортировка А→Я",
+  "sortDescending": "Сортировка Я→А",
+  "loading": "Загрузка контактов…",
+  "noAccessTitle": "Нет доступа к контактам",
+  "noAccessMessage": "Разрешите доступ, чтобы увидеть список контактов.",
+  "noAccessSettingsMessage": "Доступ запрещён. Включите его в настройках приложения.",
+  "requestAccess": "Запросить доступ",
+  "openSettings": "Открыть настройки",
+  "emptyAddressBook": "Адресная книга пуста",
+  "emptySearch": "Ничего не найдено",
+  "loadError": "Не удалось прочитать контакты",
+  "retry": "Повторить",
+  "noName": "Без имени",
+  "noPhone": "Нет телефона",
+  "hasEmail": "Есть email",
+  "detailsTitle": "Контакт",
+  "phones": "Телефоны",
+  "emails": "Email",
+  "noPhones": "Телефонов нет",
+  "noEmails": "Email нет",
+  "organization": "Организация",
+  "addresses": "Адреса",
+  "events": "Даты",
+  "websites": "Сайты",
+  "notes": "Заметки",
+  "contactNotFound": "Контакт не найден",
+  "detailsError": "Не удалось загрузить контакт"
+}
